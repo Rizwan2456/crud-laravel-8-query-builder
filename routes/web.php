@@ -16,7 +16,10 @@ use App\Http\Controllers\EmployeeController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/employee', [EmployeeController::class, 'index'])->name('home');
-Route::post('/employee', [EmployeeController::class, 'store']);
-Route::get('/form', [EmployeeController::class, 'create']);
+//Route::resource('employees', EmployeeController::class);
+Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+Route::post('/employees', [EmployeeController::class, 'store']);
+Route::get('/employees/create', [EmployeeController::class, 'create']);
+Route::get('/employees/{id}/edit', [EmployeeController::class, 'edit']);
+Route::put('/employees/{id}', [EmployeeController::class, 'update']);
+Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);

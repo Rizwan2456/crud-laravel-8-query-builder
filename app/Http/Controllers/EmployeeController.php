@@ -47,7 +47,7 @@ class EmployeeController extends Controller
 
         ]);
 
-        return redirect(route('home'));
+        return redirect(route('employees.index'))->with(['status'=> 'record inserted successfully']);
     }
 
     /**
@@ -69,7 +69,10 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        //  
+        $employee=DB::table('employees')->where('employee_id', $id)->first();
+        
+        return view('update', ['employee'=>$employee]);
     }
 
     /**
@@ -82,6 +85,14 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         //
+        DB::table('employees')->where('employee_id', $id)->update([
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'salary' => $request->salary
+
+        ]);
+        return redirect(route('employees.index'))->with(['status'=> 'record updated successfully']);
+
     }
 
     /**
@@ -93,5 +104,8 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         //
+        $employee=DB::table('employees')->where('employee_id', $id)->delete();
+        return redirect(route('employees.index'))->with(['status'=> 'record deleted successfully']);
+
     }
 }

@@ -14,11 +14,16 @@
 
     <div class="container mt-4">
         <div class="row">
+            @if (session()->has('status'))
+                <div class="alert alert-success">
+                    {{session('status')}}
+                </div>
+            @endif
             <div class="col-6">
                 <h1>Employees Data</h1>
             </div>
             <div class="col-6">
-                <a href="" class="btn btn-primary float-end">Add Employee</a>
+                <a href="employees/create" class="btn btn-primary float-end">Add Employee</a>
             </div>
         </div>
         <div class="row">
@@ -49,8 +54,13 @@
                             </td>
                             <td>{{$emp->salary}}</td>
                             <td>
-                                <a href="" class="btn btn-primary">Edit</a>
-                                <a href="" class="btn btn-danger">Delete</a>
+                                <a href="/employees/{{$emp->employee_id}}/edit" class="btn btn-primary">Edit</a>
+                                <form method="post" action="/employees/{{$emp->employee_id}}" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                <input type="submit" class="btn btn-danger" name="submit" value="Delete">
+                            </form>
+
                             </td>
                         </tr>
                     @endforeach
